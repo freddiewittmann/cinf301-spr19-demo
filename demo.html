@@ -1,0 +1,100 @@
+<DOCTYPE html>
+<html>
+<head>
+	<title>Vue.js </title>
+	<script src = "https://unpkg.com/vue@2.6.10/dist/vue.js"> //import vue.js library
+	</script>
+	<style>
+		.box {
+			width: 100px;
+			height: 100px;
+			background-color: black;
+			display: inline-block;
+		}
+		.green {
+			background-color: green;
+		}
+		.orange {
+			background-color: orange;
+		}
+		.yellow {
+			background-color: yellow;
+		}
+		.blue {
+			background-color: blue;
+		}
+		.purple {
+			background-color: purple;
+		}
+		.red {
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id = "demo">
+		<h1>Accessing the DOM through Vue.js instance</h1>
+		<!--Note: anything stored in Vue instance is accesible through html-->
+		<p>{{title}}</p>
+		<br />
+		<p>{{methodDOM()}}</p>
+		<br />
+		<hr>
+		<h1>Using event listeners</h1>
+		<input type = "text" v-on:input = "changeText">
+		<br />
+		<br />
+		<button v-on:click="addEvenNumbers">Click Me to +!</button>
+		<button v-on:click="subEvenNumbers">Click Me to -!</button>
+		<br />
+		<button v-on:mousemove = "addEvenNumbers">Hover over me to +!</button>
+		<button v-on:mousemove = "subEvenNumbers">Hover over me to -!</button>
+		<p>{{evenNumber}}</p>
+		<p>{{evenNumber > 199 ? "Greater than 199" : "Smaller than 199"}}</p>
+		<hr>
+		<h1>v-bind directive and straight HTML</h1>
+		<a v-bind:href="link">Visit myStetson!</a>
+		<br />
+		<p v-html="htmlRender"></p>
+		<hr>
+		<h1>Dynamic styling with CSS!</h1>
+		<div class = "box" v-on:click="colorChange = !colorChange" :class = "{green: colorChange}"></div>
+		<br />
+		<div class = "box" :class = "color"></div> --> controlled through classes
+		<br />
+		<input type = "text" v-model = "color" />
+		<br />
+		<br />
+		<div class = "box" :style = "{backgroundColor: color}"> </div> --> controlled through style attribute
+		<hr>
+	</div>	
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				title: 'Hello CINF 301!',
+				link: 'https://my.stetson.edu/portal/index.jsp',
+				htmlRender: '<img src="vuejslogo.png" alt="no image" />',
+				evenNumber: 0,
+				//prevents cross-site scripting attacks
+				colorChange: false,
+				color: 'green'
+			},
+			methods: {
+				changeText: function(event) {
+					this.title = event.target.value; //'this' refere to the Vue instance object
+				},
+				methodDOM: function() {
+					return 'HELLO cinf 301';
+				},
+				addEvenNumbers: function() {
+					this.evenNumber+=2;
+				},
+				subEvenNumbers: function() {
+					this.evenNumber-=2;
+				}
+			}
+		});
+	</script>
+</body>
+</html>
